@@ -20,7 +20,8 @@ export default {
             const todoObj = {
                 id:nanoid(),
                 title: e.target.value,
-                done: false
+                done: false,
+                isEdit: false,
             }
             this.$emit('addTodo',todoObj)
             e.target.value = ''

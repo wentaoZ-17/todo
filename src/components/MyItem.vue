@@ -2,13 +2,12 @@
     <div>
         <li>
             <label>
-                <input type="checkbox" 
-                    :checked="todo.done" 
-                    @click="handleClick(todo.id)"
-                />
-                <span>{{ todo.title }}</span>
+                <input type="checkbox" :checked="todo.done" @click="handleClick(todo.id)"/>
+                <span v-show="!todo.isEdit">{{ todo.title }}</span>
+                <input v-show="todo.isEdit" type="text" :value="todo.title" @blur="handleBlur(todo)">
             </label>
             <button class="btn btn-danger" @click="handleDelete(todo.id)">删除</button>
+            <button class="btn btn-edit" @click="handleEdit(todo)">编辑</button>
         </li>
     </div>
 </template>
@@ -18,14 +17,20 @@ export default {
     name: 'MyItem',
     props: ['todo', 'checkTodo', 'deleteTodo'],
     methods: {
-        handleClick(id) {
-            this.checkTodo(id)
-        },
-        handleDelete(id) {
-            if (confirm('确定删除吗')) {
-                this.deleteTodo(id)
-            }
+      handleClick(id) {
+          this.checkTodo(id)
+      },
+      handleDelete(id) {
+        if (confirm('确定删除吗')) {
+          this.deleteTodo(id)
         }
+      },
+      handleEdit(todo) {
+          todo.isEdit = true
+      },
+      handleBlur(todo) {
+        todo.isEdit = false
+      }
     },
 }
 </script>
